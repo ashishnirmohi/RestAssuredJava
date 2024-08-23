@@ -1,0 +1,1201 @@
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class RestAssuredExample {
+    public static void main(String[] args) {
+        // Base URI for the REST API
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Single Header
+        Response response = RestAssured
+                .given()
+                .header("Authorization", "Bearer your_token_here") // Passing a single header
+                .header("Accept", "application/json")             // Adding another header
+                .when()
+                .get("/resource");                                // GET request to /resource
+
+        // Print the response status code
+        System.out.println("Status Code: " + response.getStatusCode());
+
+        // Print the response body
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+}
+*******************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.http.Headers;
+import io.restassured.http.Header;
+import io.restassured.response.Response;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class RestAssuredExample {
+    public static void main(String[] args) {
+        // Base URI for the REST API
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Creating headers
+        Map<String, String> headersMap = new HashMap<>();
+        headersMap.put("Authorization", "Bearer your_token_here");
+        headersMap.put("Accept", "application/json");
+        headersMap.put("Custom-Header", "CustomValue");
+
+        // Multiple Headers
+        Response response = RestAssured
+                .given()
+                .headers(headersMap)  // Passing multiple headers
+                .when()
+                .get("/resource");    // GET request to /resource
+
+        // Print the response status code
+        System.out.println("Status Code: " + response.getStatusCode());
+
+        // Print the response body
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+}
+***************************************************************************************************
+
+import io.restassured.RestAssured;
+import io.restassured.http.Header;
+import io.restassured.http.Headers;
+import io.restassured.response.Response;
+
+import java.util.Arrays;
+
+public class RestAssuredExample {
+    public static void main(String[] args) {
+        // Base URI for the REST API
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Creating Header objects
+        Header header1 = new Header("Authorization", "Bearer your_token_here");
+        Header header2 = new Header("Accept", "application/json");
+
+        // Adding headers to Headers class
+        Headers headers = new Headers(Arrays.asList(header1, header2));
+
+        // Multiple Headers using Headers class
+        Response response = RestAssured
+                .given()
+                .headers(headers)  // Passing Headers object
+                .when()
+                .get("/resource"); // GET request to /resource
+
+        // Print the response status code
+        System.out.println("Status Code: " + response.getStatusCode());
+
+        // Print the response body
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+}
+**************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.json.JSONObject;
+
+public class RestAssuredPostJsonObject {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Creating a JSON object for the request body
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("name", "John Doe");
+        requestParams.put("email", "john.doe@example.com");
+        requestParams.put("age", 30);
+
+        // Sending the POST request with JSON object
+        Response response = RestAssured
+                .given()
+                .header("Content-Type", "application/json")
+                .body(requestParams.toString())  // Converting JSON object to string
+                .when()
+                .post("/createUser");  // POST request to /createUser
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+****************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class RestAssuredPostFormParams {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Sending the POST request with form parameters
+        Response response = RestAssured
+                .given()
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .formParam("name", "John Doe")
+                .formParam("email", "john.doe@example.com")
+                .formParam("age", 30)
+                .when()
+                .post("/createUser");  // POST request to /createUser
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+***************************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class RestAssuredPostHashMap {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Creating a HashMap for the request body
+        Map<String, Object> requestParams = new HashMap<>();
+        requestParams.put("name", "John Doe");
+        requestParams.put("email", "john.doe@example.com");
+        requestParams.put("age", 30);
+
+        // Sending the POST request with HashMap
+        Response response = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(requestParams)  // HashMap will be automatically converted to JSON
+                .when()
+                .post("/createUser");  // POST request to /createUser
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+***********************************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class RestAssuredDeleteBasic {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Sending DELETE request
+        Response response = RestAssured
+                .given()
+                .when()
+                .delete("/deleteResource/123"); // DELETE request to /deleteResource/123
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+************************************************************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class RestAssuredDeleteQueryParams {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Sending DELETE request with query parameters
+        Response response = RestAssured
+                .given()
+                .queryParam("force", true)
+                .queryParam("apiKey", "your_api_key")
+                .when()
+                .delete("/deleteResource/123"); // DELETE request to /deleteResource/123
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+*****************************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class RestAssuredDeleteWithHeaders {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Sending DELETE request with headers
+        Response response = RestAssured
+                .given()
+                .header("Authorization", "Bearer your_token_here")
+                .header("Content-Type", "application/json")
+                .when()
+                .delete("/deleteResource/123"); // DELETE request to /deleteResource/123
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+*****************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.json.JSONObject;
+
+public class RestAssuredDeleteWithBody {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Creating a JSON object for the request body
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("id", "123");
+        requestParams.put("confirm", true);
+
+        // Sending DELETE request with body
+        Response response = RestAssured
+                .given()
+                .header("Authorization", "Bearer your_token_here")
+                .contentType(ContentType.JSON)
+                .body(requestParams.toString())  // Converting JSON object to string
+                .when()
+                .delete("/deleteResource"); // DELETE request to /deleteResource
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+**********************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class RestAssuredDeletePathParams {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Sending DELETE request with path parameters
+        Response response = RestAssured
+                .given()
+                .pathParam("resourceId", 123)
+                .when()
+                .delete("/deleteResource/{resourceId}"); // DELETE request to /deleteResource/{resourceId}
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+****************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class RestAssuredDeleteHashMap {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Creating a HashMap for query parameters
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("force", true);
+        queryParams.put("apiKey", "your_api_key");
+
+        // Sending DELETE request with HashMap for query parameters
+        Response response = RestAssured
+                .given()
+                .queryParams(queryParams)
+                .when()
+                .delete("/deleteResource/123"); // DELETE request to /deleteResource/123
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+***********************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class RestAssuredPostWithJsonFile {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Path to the JSON file
+        String jsonFilePath = "src/test/resources/requestBody.json";
+
+        // Read the JSON file content
+        String jsonBody = null;
+        try {
+            jsonBody = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Sending POST request with the JSON file content as the body
+        Response response = RestAssured
+                .given()
+                .header("Authorization", "Bearer your_token_here") // Optional header
+                .contentType(ContentType.JSON)
+                .body(jsonBody)  // Using the JSON content as the request body
+                .when()
+                .post("/createUser");  // POST request to /createUser
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+***************************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+public class RestAssuredPostWithJsonString {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // JSON body as a String
+        String jsonBody = "{\n" +
+                          "  \"name\": \"John Doe\",\n" +
+                          "  \"email\": \"john.doe@example.com\",\n" +
+                          "  \"age\": 30\n" +
+                          "}";
+
+        // Sending POST request with the JSON string
+        Response response = RestAssured
+                .given()
+                .header("Authorization", "Bearer your_token_here") // Optional header
+                .contentType(ContentType.JSON)
+                .body(jsonBody)  // Setting the request body
+                .when()
+                .post("/createUser");  // POST request to /createUser
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+**************************************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.json.JSONObject;
+
+public class RestAssuredPostWithJsonObject {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Creating a JSON object for the request body
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("name", "John Doe");
+        jsonBody.put("email", "john.doe@example.com");
+        jsonBody.put("age", 30);
+
+        // Sending POST request with the JSON object
+        Response response = RestAssured
+                .given()
+                .header("Authorization", "Bearer your_token_here") // Optional header
+                .contentType(ContentType.JSON)
+                .body(jsonBody.toString())  // Converting JSON object to string
+                .when()
+                .post("/createUser");  // POST request to /createUser
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+******************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class RestAssuredComplexJsonObject {
+    public static void main(String[] args) {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Creating the JSON object for the user
+        JSONObject userObject = new JSONObject();
+        userObject.put("id", 101);
+        userObject.put("name", "John Doe");
+        userObject.put("email", "john.doe@example.com");
+
+        // Creating the JSON object for the address
+        JSONObject addressObject = new JSONObject();
+        addressObject.put("street", "123 Main St");
+        addressObject.put("city", "New York");
+        addressObject.put("zipcode", "10001");
+
+        // Adding the address object to the user object
+        userObject.put("address", addressObject);
+
+        // Creating the JSON array for orders
+        JSONArray ordersArray = new JSONArray();
+
+        // Creating individual order JSON objects
+        JSONObject order1 = new JSONObject();
+        order1.put("order_id", "A001");
+        order1.put("product", "Laptop");
+        order1.put("quantity", 1);
+        order1.put("price", 999.99);
+
+        JSONObject order2 = new JSONObject();
+        order2.put("order_id", "A002");
+        order2.put("product", "Smartphone");
+        order2.put("quantity", 2);
+        order2.put("price", 499.99);
+
+        // Adding orders to the orders array
+        ordersArray.put(order1);
+        ordersArray.put(order2);
+
+        // Creating the JSON object for payment details
+        JSONObject paymentDetailsObject = new JSONObject();
+        paymentDetailsObject.put("card_number", "4111111111111111");
+        paymentDetailsObject.put("expiry_date", "12/25");
+        paymentDetailsObject.put("cvv", "123");
+
+        // Creating the JSON object for payment
+        JSONObject paymentObject = new JSONObject();
+        paymentObject.put("method", "credit_card");
+        paymentObject.put("details", paymentDetailsObject);
+
+        // Creating the final JSON object
+        JSONObject finalRequestBody = new JSONObject();
+        finalRequestBody.put("user", userObject);
+        finalRequestBody.put("orders", ordersArray);
+        finalRequestBody.put("payment", paymentObject);
+
+        // Sending the POST request with the complex JSON object
+        Response response = RestAssured
+                .given()
+                .header("Authorization", "Bearer your_token_here") // Optional header
+                .contentType(ContentType.JSON)
+                .body(finalRequestBody.toString())  // Converting the complex JSON object to string
+                .when()
+                .post("/processOrder");  // POST request to /processOrder
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+{
+    "user": {
+        "id": 101,
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "address": {
+            "street": "123 Main St",
+            "city": "New York",
+            "zipcode": "10001"
+        }
+    },
+    "orders": [
+        {
+            "order_id": "A001",
+            "product": "Laptop",
+            "quantity": 1,
+            "price": 999.99
+        },
+        {
+            "order_id": "A002",
+            "product": "Smartphone",
+            "quantity": 2,
+            "price": 499.99
+        }
+    ],
+    "payment": {
+        "method": "credit_card",
+        "details": {
+            "card_number": "4111111111111111",
+            "expiry_date": "12/25",
+            "cvv": "123"
+        }
+    }
+}
+*******************************************************************************************************************************
+baseUri=https://api.example.com
+user.name=John Doe
+user.email=john.doe@example.com
+user.age=30
+order.product=Laptop
+order.quantity=1
+order.price=999.99
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+public class RestAssuredWithProperties {
+    public static void main(String[] args) {
+        // Load properties from the file
+        Properties properties = new Properties();
+        try {
+            FileInputStream inputStream = new FileInputStream("src/test/resources/config.properties");
+            properties.load(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Convert Properties to Map
+        Map<String, Object> configMap = new HashMap<>();
+        for (String key : properties.stringPropertyNames()) {
+            configMap.put(key, properties.getProperty(key));
+        }
+
+        // Extract specific values from the Map
+        String baseUri = (String) configMap.get("baseUri");
+        String userName = (String) configMap.get("user.name");
+        String userEmail = (String) configMap.get("user.email");
+        int userAge = Integer.parseInt((String) configMap.get("user.age"));
+        String product = (String) configMap.get("order.product");
+        int quantity = Integer.parseInt((String) configMap.get("order.quantity"));
+        double price = Double.parseDouble((String) configMap.get("order.price"));
+
+        // Create a complex JSON object using the map data
+        Map<String, Object> requestBody = new HashMap<>();
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("name", userName);
+        userMap.put("email", userEmail);
+        userMap.put("age", userAge);
+        requestBody.put("user", userMap);
+
+        Map<String, Object> orderMap = new HashMap<>();
+        orderMap.put("product", product);
+        orderMap.put("quantity", quantity);
+        orderMap.put("price", price);
+        requestBody.put("order", orderMap);
+
+        // Setting the base URI using the value from the properties file
+        RestAssured.baseURI = baseUri;
+
+        // Sending POST request using the constructed JSON object
+        Response response = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when()
+                .post("/createOrder");
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+**********************************************************************************************************************
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+public class RestAssuredWithProperties {
+    public static void main(String[] args) {
+        // Load properties from the file
+        Properties properties = new Properties();
+        FileInputStream inputStream = new FileInputStream("src/test/resources/config.properties");
+        properties.load(inputStream);
+       
+        // Convert Properties to Map
+        Map<String, Object> configMap = new HashMap<>();
+        for (String key : properties.stringPropertyNames()) {
+            configMap.put(key, properties.getProperty(key));
+        }
+
+        // Extract specific values from the Map
+        String baseUri = (String) configMap.get("baseUri");
+        String userName = (String) configMap.get("user.name");
+        String userEmail = (String) configMap.get("user.email");
+        int userAge = Integer.parseInt((String) configMap.get("user.age"));
+        String product = (String) configMap.get("order.product");
+        int quantity = Integer.parseInt((String) configMap.get("order.quantity"));
+        double price = Double.parseDouble((String) configMap.get("order.price"));
+
+        // Create a complex JSON object using the map data
+        Map<String, Object> requestBody = new HashMap<>();
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("name", userName);
+        userMap.put("email", userEmail);
+        userMap.put("age", userAge);
+        requestBody.put("user", userMap);
+
+        Map<String, Object> orderMap = new HashMap<>();
+        orderMap.put("product", product);
+        orderMap.put("quantity", quantity);
+        orderMap.put("price", price);
+        requestBody.put("order", orderMap);
+
+        // Setting the base URI using the value from the properties file
+        RestAssured.baseURI = baseUri;
+
+        // Sending POST request using the constructed JSON object
+        Response response = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when()
+                .post("/createOrder");
+
+        // Print the response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+    }
+}
+*******************************************************************************************
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+
+public class ExtentReportListener implements ITestListener {
+
+    private static ExtentReports extent;
+    private static ExtentTest test;
+
+    @Override
+    public void onStart(ITestContext context) {
+        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("extentReport.html");
+        htmlReporter.config().setTheme(Theme.DARK);
+        htmlReporter.config().setDocumentTitle("API Test Report");
+        htmlReporter.config().setReportName("Rest Assured API Test Report");
+
+        extent = new ExtentReports();
+        extent.attachReporter(htmlReporter);
+    }
+
+    @Override
+    public void onTestStart(ITestResult result) {
+        test = extent.createTest(result.getMethod().getMethodName());
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult result) {
+        test.log(Status.PASS, "Test passed");
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+        test.log(Status.FAIL, "Test failed: " + result.getThrowable());
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+        test.log(Status.SKIP, "Test skipped: " + result.getThrowable());
+    }
+
+    @Override
+    public void onFinish(ITestContext context) {
+        extent.flush();
+    }
+}
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+
+@Listeners(ExtentReportListener.class)
+public class RestAssuredTest {
+
+    @Test
+    public void testCreateUser() {
+        // Base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // JSON body
+        String jsonBody = "{\n" +
+                          "  \"name\": \"John Doe\",\n" +
+                          "  \"email\": \"john.doe@example.com\",\n" +
+                          "  \"age\": 30\n" +
+                          "}";
+
+        // Sending POST request
+        Response response = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(jsonBody)
+                .when()
+                .post("/createUser");
+
+        // Validating response
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(statusCode, 201, "Expected status code is 201");
+
+        // Additional assertions can be added here
+    }
+}
+
+@Override
+public void onTestFailure(ITestResult result) {
+    String screenshotPath = "path/to/screenshot.png";  // Implement your screenshot capture logic here
+    test.log(Status.FAIL, "Test failed: " + result.getThrowable());
+    test.addScreenCaptureFromPath(screenshotPath);
+}
+
+**************************************************************************************************************************
+import org.json.JSONObject;
+
+public class PayloadGenerator {
+
+    public static JSONObject createUserPayload(String name, String email, int age) {
+        JSONObject payload = new JSONObject();
+        payload.put("name", name);
+        payload.put("email", email);
+        payload.put("age", age);
+        return payload;
+    }
+
+    // Overloaded method for different data structures or more complex payloads
+    public static JSONObject createUserPayload(String name, String email, int age, String address, String phoneNumber) {
+        JSONObject payload = new JSONObject();
+        payload.put("name", name);
+        payload.put("email", email);
+        payload.put("age", age);
+        payload.put("address", address);
+        payload.put("phoneNumber", phoneNumber);
+        return payload;
+    }
+}
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.testng.annotations.Test;
+
+public class UserCreationTest {
+
+    @Test
+    public void testCreateUser() {
+        // Generate dynamic payload
+        JSONObject payload = PayloadGenerator.createUserPayload("John Doe", "john.doe@example.com", 30);
+
+        // Set base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Send POST request with dynamic payload
+        Response response = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(payload.toString())  // Convert JSON object to string
+                .when()
+                .post("/createUser");
+
+        // Print response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+
+        // Assertions can be added here
+    }
+}
+*******************************************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.json.JSONObject;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+public class UserCreationTest {
+
+    @DataProvider(name = "userData")
+    public Object[][] createUserData() {
+        return new Object[][] {
+            { "John Doe", "john.doe@example.com", 30 },
+            { "Jane Smith", "jane.smith@example.com", 25 }
+        };
+    }
+
+    @Test(dataProvider = "userData")
+    public void testCreateUser(String name, String email, int age) {
+        // Generate dynamic payload
+        JSONObject payload = PayloadGenerator.createUserPayload(name, email, age);
+
+        // Set base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Send POST request with dynamic payload
+        Response response = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(payload.toString())  // Convert JSON object to string
+                .when()
+                .post("/createUser");
+
+        // Print response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+
+        // Add assertions to validate response
+        Assert.assertEquals(response.getStatusCode(), 201);
+    }
+}
+****************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import java.io.File;
+
+public class FileUploadTest {
+
+    @Test
+    public void testFileUpload() {
+        // Path to the file you want to upload
+        File file = new File("path/to/your/file.txt");
+
+        // Set base URI
+        RestAssured.baseURI = "https://api.example.com";
+
+        // Send POST request with file upload
+        Response response = RestAssured
+                .given()
+                .contentType(ContentType.MULTIPART)  // Set content type to multipart
+                .multiPart("file", file)  // Attach file
+                .when()
+                .post("/upload");
+
+        // Print response
+        System.out.println("Response: " + response.asString());
+        System.out.println("Status Code: " + response.getStatusCode());
+
+        // Validate the response
+        Assert.assertEquals(response.getStatusCode(), 200, "Status code should be 200");
+        Assert.assertTrue(response.asString().contains("File uploaded successfully"), "Response should contain success message");
+    }
+}
+******************************************************************************************************************************************
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+public class LoadTestExample {
+
+    public static void main(String[] args) {
+        // Set the base URI of the API
+        RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
+        String endpoint = "/posts/1";
+
+        // Number of requests to simulate
+        int requestCount = 100;
+        List<Long> responseTimes = new ArrayList<>();
+
+        for (int i = 0; i < requestCount; i++) {
+            // Measure start time
+            long startTime = System.nanoTime();
+
+            // Send a GET request
+            Response response = RestAssured.get(endpoint);
+
+            // Measure end time
+            long endTime = System.nanoTime();
+
+            // Calculate the time taken for the request
+            long duration = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
+
+            // Add response time to the list
+            responseTimes.add(duration);
+
+            // Print response status and time for each request
+            System.out.println("Request " + (i + 1) + ": Status Code = " + response.getStatusCode() + ", Time = " + duration + " ms");
+
+            // Optionally, introduce a small delay between requests to simulate real-world usage
+            try {
+                Thread.sleep(100); // 100 milliseconds delay
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Calculate and display average response time
+        long totalResponseTime = responseTimes.stream().mapToLong(Long::longValue).sum();
+        double averageResponseTime = (double) totalResponseTime / responseTimes.size();
+        System.out.println("Average Response Time: " + averageResponseTime + " ms");
+
+        // Find min and max response times
+        long minResponseTime = responseTimes.stream().min(Long::compareTo).orElse(0L);
+        long maxResponseTime = responseTimes.stream().max(Long::compareTo).orElse(0L);
+        System.out.println("Min Response Time: " + minResponseTime + " ms");
+        System.out.println("Max Response Time: " + maxResponseTime + " ms");
+    }
+}
+**************************************************************************************************************************************
+{
+    "status": "success",
+    "message": "User created successfully"
+}
+
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+public class ApiTest {
+    public static void main(String[] args) {
+        given()
+            .when()
+                .get("https://api.example.com/user/create")
+            .then()
+                .statusCode(200)
+                .body("status", equalTo("success"))
+                .body("message", equalTo("User created successfully"));
+    }
+}
+**********************************************************************************
+{
+    "user": {
+        "id": 1500,
+        "name": "John Doe",
+        "contact": {
+            "email": "johndoe@example.com",
+            "phone": "1234567890"
+        }
+    }
+}
+given()
+    .when()
+        .get("https://api.example.com/user/1500")
+    .then()
+        .statusCode(200)
+        .body("user.id", equalTo(1500))
+        .body("user.contact.email", equalTo("johndoe@example.com"))
+        .body("user.contact.phone", equalTo("1234567890"));
+***********************************************************************************************
+{
+    "user": {
+        "id": 1500,
+        "active": true
+    }
+}
+given()
+    .when()
+        .get("https://api.example.com/user/1500")
+    .then()
+        .statusCode(200)
+        .body("user.active", equalTo(true));
+		
+******************************************************************************
+{
+    "users": ["Alice", "Bob", "Charlie"]
+}
+given()
+    .when()
+        .get("https://api.example.com/users")
+    .then()
+        .statusCode(200)
+        .body("users", hasSize(3))
+        .body("users", hasItems("Alice", "Bob"));
+*******************************************************************************************************************************
+{
+    "users": [
+        {"id": 1500, "name": "John Doe"},
+        {"id": 1501, "name": "Jane Doe"}
+    ]
+}
+
+given()
+    .when()
+        .get("https://api.example.com/users")
+    .then()
+        .statusCode(200)
+        .body("users.find { it.id == 1500 }.name", equalTo("John Doe"));
+
+**************************************************************************************
+{
+    "user": {
+        "id": 1500,
+        "middle_name": null
+    }
+}
+given()
+    .when()
+        .get("https://api.example.com/user/1500")
+    .then()
+        .statusCode(200)
+        .body("user.middle_name", nullValue());
+****************************************************************************
+{
+    "user": {
+        "id": 1500,
+        "created_at": "2023-08-15T13:45:30Z"
+    }
+}
+given()
+    .when()
+        .get("https://api.example.com/user/1500")
+    .then()
+        .statusCode(200)
+        .body("user.created_at", matchesPattern("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"));
+******************************************************************************************************
+{
+    "employees": [
+        {"id": 1001, "name": "John Doe", "age": 30, "department": "IT"},
+        {"id": 1002, "name": "Jane Smith", "age": 25, "department": "HR"},
+        {"id": 1003, "name": "Alice Johnson", "age": 28, "department": "Finance"}
+    ]
+}
+given()
+    .when()
+        .get("https://api.example.com/employees")
+    .then()
+        .statusCode(200)
+        .body("employees.find { it.age > 25 }.name", equalTo("John Doe"))
+        .body("employees.findAll { it.department == 'IT' }.size()", greaterThan(0));
+*************************************************************************************************************
+{
+    "company": {
+        "name": "Tech Corp",
+        "departments": [
+            {
+                "name": "IT",
+                "employees": [
+                    {"id": 1001, "name": "John Doe", "role": "Developer"},
+                    {"id": 1004, "name": "Sarah Davis", "role": "Tester"}
+                ]
+            },
+            {
+                "name": "HR",
+                "employees": [
+                    {"id": 1002, "name": "Jane Smith", "role": "HR Manager"}
+                ]
+            }
+        ]
+    }
+}
+given()
+    .when()
+        .get("https://api.example.com/company")
+    .then()
+        .statusCode(200)
+        .body("company.departments.find { it.name == 'IT' }.employees.find { it.id == 1001 }.role", equalTo("Developer"))
+        .body("company.departments.find { it.name == 'HR' }.employees.size()", equalTo(1));
+*************************************************************************************************************************************
+{
+    "users": [
+        {"id": 2001, "name": "John Doe", "active": true, "age": 35},
+        {"id": 2002, "name": "Jane Smith", "active": false, "age": 28},
+        {"id": 2003, "name": "Mike Brown", "active": true, "age": 40}
+    ]
+}
+given()
+    .when()
+        .get("https://api.example.com/users")
+    .then()
+        .statusCode(200)
+        .body("users.findAll { it.active && it.age > 30 }.size()", equalTo(2))
+        .body("users.find { it.id == 2002 }.active", equalTo(false));
+****************************************************************************************************************************
+{
+    "user": {
+        "id": 2001,
+        "name": "John Doe",
+        "settings": {
+            "language": "en",
+            "timezone": "GMT"
+        }
+    }
+}
+int userId = 2001;
+
+given()
+    .pathParam("userId", userId)
+    .when()
+        .get("https://api.example.com/users/{userId}")
+    .then()
+        .statusCode(200)
+        .body("user.id", equalTo(userId))
+        .body("user.settings.language", equalTo("en"));
+
+*************************************************************************************************************
+{
+    "order": {
+        "id": 5001,
+        "status": "shipped",
+        "items": [
+            {"product_id": 101, "quantity": 2, "price": 20.5},
+            {"product_id": 102, "quantity": 1, "price": 15.0}
+        ],
+        "total": 56.0
+    }
+}
+given()
+    .when()
+        .get("https://api.example.com/orders/5001")
+    .then()
+        .statusCode(200)
+        .body("order.status", equalTo("shipped"))
+        .body("order.items.find { it.product_id == 101 }.quantity", equalTo(2))
+        .body("order.items.find { it.product_id == 102 }.price", equalTo(15.0))
+        .body("order.total", equalTo(56.0f));  // Note: Use 'f' for float comparison
+********************************************************************************************************************************
+{
+    "product": {
+        "id": 101,
+        "name": "Laptop",
+        "price": 1200
+    }
+}
+given()
+    .when()
+        .get("https://api.example.com/products/101")
+    .then()
+        .statusCode(200)
+        .body("product.discount", nullValue())
+        .body("product.stock", nullValue());
+***********************************************************************************************
+{
+    "response": {
+        "code": 200,
+        "data": {
+            "name": "John Doe",
+            "age": 35
+        }
+    }
+}
+given()
+    .when()
+        .get("https://api.example.com/user/2001")
+    .then()
+        .statusCode(200)
+        .body("response.data.age", age -> assertThat(age, greaterThan(30)))
+        .body("response.data.name", name -> assertThat(name, containsString("Doe")));
+*****************************************************************************************************************************************
